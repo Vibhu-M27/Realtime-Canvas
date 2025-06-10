@@ -1,202 +1,62 @@
-/* .canva-container {
-  display: flex;
-  height: 100vh;
-  background: linear-gradient(to bottom right, #f0f4f8, #d9e2ec);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
-  transition: 0.3s;
-}
-
-.sidebar {
-  width: 120px;
-  padding: 15px;
-  background: #fff;
-  border-right: 1px solid #ccc;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  overflow-y: auto;
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  z-index: 100;
-}
-
-.sidebar img {
-  width: 70px;
-  height: 70px;
-  border-radius: 10px;
-  cursor: grab;
-  transition: transform 0.3s, box-shadow 0.3s;
-  object-fit: cover; 
-}
-
-.sidebar img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.sidebar-controls {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 200;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar-controls button {
-  background: #2196F3;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-.sidebar-controls button:hover {
-  background: #1976D2;
-}
-
-.sidebar-controls button:first-child {
-  background: #4CAF50;
-}
-
-.sidebar-controls button:first-child:hover {
-  background: #45a049;
-}
-
-.sidebar-controls button:nth-child(2) {
-  background: #FF5722;
-}
-
-.sidebar-controls button:nth-child(2):hover {
-  background: #e64a19;
-}
-
-.canva-wrapper {
-  flex-grow: 1;
-  overflow: hidden; 
-  position: relative;
-  cursor: grab;
-}
-
-.canva-space {
-  width: 5000px;  
-  height: 5000px; 
-  background: #fff;
-  position: absolute;
-  transform-origin: 0 0;
-  transition: background 0.3s;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
-  background-image: linear-gradient(#e5e5e5 1px, transparent 1px),
-                    linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
-  background-size: 20px 20px; 
-}
-
-.canva-space img {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-  object-fit: cover; 
-}
-
-.canva-space img:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-}
-
-.locked-sticker {
-  cursor: not-allowed;
-  opacity: 0.8;
-  border: 2px solid #FF5722;
-}
-
-
-.qr-indicator {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-size: 14px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 200;
-}
-
-
-@media (max-width: 768px) {
-  .sidebar {
-    width: 80px;
-    padding: 10px;
-  }
-  
-  .sidebar img {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .sidebar-controls {
-    padding: 10px;
-  }
-  
-  .sidebar-controls button {
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-} */
-
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 /* Base Styles */
 .canva-container {
   display: flex;
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(to bottom right, #f0f4f8, #d9e2ec);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
   overflow: hidden;
-  touch-action: none;
   position: fixed;
   top: 0;
   left: 0;
+  background: #ffffff;
 }
 
 /* Sidebar Styles */
 .sidebar {
-  width: 100px;
-  padding: 10px;
-  background: #fff;
-  border-right: 1px solid #ccc;
+  width: 20%;
+  min-width: 15%;
+  max-width: 30%;
+  height: 100vh;
+  padding: 1.5%;
+  background: #ffffff;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: 0.2vw 0 0.8vw rgba(0, 0, 0, 0.1);
+  border-right: 4px solid #3b82f6;
+  border-radius: 0 16px 16px 0;
+  transition: width 0.2s ease, border-color 0.2s ease;
+}
+
+.sidebar:hover {
+  border-right-color: #1e40af;
+}
+
+/* Sidebar Content */
+.sidebar-content {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2vh;
   overflow-y: auto;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  transition: transform 0.3s ease;
 }
 
 .sidebar img {
-  width: 70px;
-  height: 70px;
-  border-radius: 8px;
+  width: 30%;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
   cursor: grab;
   object-fit: cover;
-  touch-action: none;
   user-select: none;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sidebar img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);
 }
 
 .sidebar img:active {
@@ -208,105 +68,419 @@
   flex: 1;
   overflow: hidden;
   position: relative;
-  touch-action: none;
 }
 
 .canva-space {
-  width: 5000px;
-  height: 5000px;
-  background: #fff;
+  width: 500vw;
+  height: 500vh;
+  background: #ffffff;
   position: absolute;
   transform-origin: 0 0;
-  background-image: 
-    linear-gradient(#e5e5e5 1px, transparent 1px),
-    linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
-  background-size: 20px 20px;
-  touch-action: none;
+  touch-action: pinch-zoom;
 }
 
 .canva-space img {
   position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 6px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-  touch-action: none;
+  width: 60px;
+  border: none;
   user-select: none;
   object-fit: cover;
+}
+
+/* Sticker Wrapper */
+.sticker-wrapper {
+  position: absolute;
+}
+
+.sticker-wrapper.selected img {
+  border: 2px solid #3b82f6;
+}
+
+/* Resize and Rotate Handles */
+.resize-handle, .rotate-handle {
+  width: 16px;
+  height: 16px;
+  background: #3b82f6;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+}
+
+.resize-handle:hover, .rotate-handle:hover {
+  background: #1e40af;
+}
+
+/* Text Overlay */
+.text-overlay {
+  position: absolute;
+  font-size: 16px;
+  white-space: nowrap;
 }
 
 /* Controls */
 .sidebar-controls {
   position: fixed;
-  bottom: 10px;
-  left: 10px;
+  bottom: 1.5vh;
+  left: 1.5vw;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.8vw;
   z-index: 200;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: calc(100% - 20px);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.2vw;
+  border-radius: 1.2vw;
+  box-shadow: 0 0.2vh 1vh rgba(0, 0, 0, 0.1);
+  max-width: calc(100% - 3vw);
 }
 
 .sidebar-controls button {
   background: #2196F3;
   color: white;
   border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 0.8vw 1.2vw;
+  border-radius: 0.6vw;
+  font-size: 1.4vmin;
   cursor: pointer;
-  min-width: 80px;
+  min-width: 8vw;
   touch-action: manipulation;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.sidebar-controls button:hover {
+  background: #1976D2;
 }
 
 .sidebar-controls button:active {
   transform: scale(0.95);
 }
 
+/* Text Editor */
+.text-editor {
+  display: flex;
+  gap: 0.5vw;
+  align-items: center;
+}
+
+.text-editor input[type="text"] {
+  padding: 0.5vw;
+  border: 1px solid #ccc;
+  border-radius: 0.4vw;
+  font-size: 1.4vmin;
+}
+
+.text-editor input[type="color"] {
+  width: 30px;
+  height: 30px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Navigation Controls */
+.navigation-controls {
+  position: fixed;
+  bottom: 1.5vh;
+  right: 10vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5vh;
+  z-index: 200;
+}
+
+.navigation-controls button {
+  background: #2196F3;
+  color: white;
+  border: none;
+  padding: 0.8vw 1.2vw;
+  border-radius: 0.6vw;
+  font-size: 1.4vmin;
+  cursor: pointer;
+  width: 60px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.navigation-controls button:hover {
+  background: #1976D2;
+}
+
+.navigation-controls button:active {
+  transform: scale(0.95);
+}
+
+.horizontal-nav {
+  display: flex;
+  gap: 0.5vw;
+}
+
 .qr-indicator {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 8px 12px;
-  border-radius: 12px;
-  font-size: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  bottom: 1.5vh;
+  right: 1.5vw;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.8vw 1.2vw;
+  border-radius: 1.2vw;
+  font-size: 1.4vmin;
+  box-shadow: 0 0.2vh 0.8vh rgba(0, 0, 0, 0.1);
   z-index: 200;
+}
+
+/* Dialogue Box Styles */
+.dialogue-box {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 1vw 1.5vw;
+  box-shadow: 0 0.3vh 1vh rgba(0, 0, 0, 0.2);
+  font-size: 1.6vmin;
+  color: #333;
+  z-index: 300;
+  max-width: 20vw;
+  text-align: center;
+  animation: bounceIn 0.5s ease-out;
+  border: 2px solid #3b82f6;
+  user-select: none;
+}
+
+.dialogue-box button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5vw 1vw;
+  border-radius: 0.5vw;
+  font-size: 1.4vmin;
+  cursor: pointer;
+  margin-top: 1vh;
+  transition: background 0.2s;
+}
+
+.dialogue-box button:hover {
+  background: #1e40af;
+}
+
+.dialogue-box button:active {
+  transform: scale(0.95);
+}
+
+.dialogue-box::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #3b82f6;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Overlap Dialogue Box */
+.dialogue-box.overlap {
+  border: 2px solid #ef4444;
+}
+
+.dialogue-box.overlap::after {
+  border-top-color: #ef4444;
+}
+
+.dialogue-box.overlap button {
+  background: #ef4444;
+}
+
+.dialogue-box.overlap button:hover {
+  background: #b91c1c;
 }
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
+  .canva-container {
+    flex-direction: column;
+  }
+
   .sidebar {
-    width: 80px;
-    padding: 8px;
+    width: 100%;
+    height: 30vh;
+    min-width: unset;
+    max-width: unset;
+    padding: 2vw;
+    box-shadow: 0 0.2vh 0.8vh rgba(0, 0, 0, 0.1);
+    border-right: none;
+    border-bottom: 4px solid #3b82f6;
+    border-radius: 0 0 16px 16px;
   }
-  
-  .sidebar img {
-    width: 60px;
-    height: 60px;
+
+  .sidebar:hover {
+    border-bottom-color: #1e40af;
   }
-  
-  .canva-space img {
-    width: 70px;
-    height: 70px;
-  }
-  
-  .sidebar-controls {
+
+  .sidebar-content {
     flex-direction: row;
-    bottom: 5px;
-    left: 5px;
-    padding: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1vw;
   }
-  
+
+  .sidebar img {
+    width: 15vw;
+    aspect-ratio: 1/1;
+  }
+
+  .canva-wrapper {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .canva-space {
+    width: 300vw;
+    height: 300vh;
+    background: #ffffff;
+  }
+
+  .canva-space img {
+    width: 60px;
+    border: none;
+  }
+
+  .sticker-wrapper.selected img {
+    border: 2px solid #3b82f6;
+  }
+
+  .resize-handle, .rotate-handle {
+    width: 20px;
+    height: 20px;
+  }
+
+  .text-overlay {
+    font-size: 14px;
+  }
+
+  .sidebar-controls {
+    bottom: 1vh;
+    left: 1vw;
+    padding: 1vw;
+    flex-direction: row;
+    justify-content: center;
+  }
+
   .sidebar-controls button {
-    padding: 6px 10px;
+    padding: 0.6vw 1vw;
+    font-size: 16px;
+    min-width: 200px;
+  }
+
+  .text-editor input[type="text"] {
+    padding: 0.8vw;
+    font-size: 16px;
+  }
+
+  .text-editor input[type="color"] {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navigation-controls {
+    bottom: 12vh;
+    right: 1vw;
+  }
+
+  .navigation-controls button {
+    width: 50px;
+    height: 35px;
+    font-size: 16px;
+  }
+
+  .qr-indicator {
+    bottom: 1vh;
+    right: 1vw;
+    font-size: 1.2vmin;
+    padding: 0.6vw 1vw;
+  }
+
+  .dialogue-box {
+    font-size: 3.5vmin;
+    max-width: 70vw;
+    padding: 3vw 4vw;
+  }
+
+  .dialogue-box button {
+    padding: 2vw 4vw;
+    font-size: 3vmin;
+  }
+
+  .dialogue-box::after {
+    border-width: 8px;
+    bottom: -16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar img {
+    width: 12vw;
+  }
+
+  .canva-space img {
+    width: 60px;
+    border: none;
+  }
+
+  .resize-handle, .rotate-handle {
+    width: 18px;
+    height: 18px;
+  }
+
+  .text-overlay {
     font-size: 12px;
-    min-width: 70px;
+  }
+
+  .sidebar-controls {
+    gap: 0.5vw;
+  }
+
+  .sidebar-controls button {
+    padding: 0.5vw 0.8vw;
+    font-size: 16px;
+    min-width: 12vw;
+  }
+
+  .text-editor input[type="text"] {
+    padding: 1vw;
+    font-size: 14px;
+  }
+
+  .text-editor input[type="color"] {
+    width: 35px;
+    height: 35px;
+  }
+
+  .navigation-controls button {
+    width: 40px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .qr-indicator {
+    font-size: 1vmin;
+  }
+
+  .dialogue-box {
+    font-size: 4vmin;
+    max-width: 80vw;
+    padding: 4vw 5vw;
+  }
+
+  .dialogue-box button {
+    padding: 3vw 5vw;
+    font-size: 3.5vmin;
   }
 }
 
@@ -316,4 +490,19 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+button,
+img,
+.text-overlay,
+.text-editor input {
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
+}
+
+@viewport {
+  width: device-width;
+  zoom: 1;
 }

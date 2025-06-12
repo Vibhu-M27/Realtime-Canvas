@@ -1,526 +1,3 @@
-// import React, { useState, useEffect, useRef } from 'react';
-// import { ref, set, push, onValue, update } from 'firebase/database';
-// import { database } from '../firebaseConfig';
-// import { useParams } from 'react-router-dom';
-// import './Canva.css';
-
-// // Dialogue Box Component
-// const DialogueBox = ({ message, position, onClose, isOverlap }) => {
-//   return (
-//     <div
-//       className={`dialogue-box ${isOverlap ? 'overlap' : ''}`}
-//       style={{
-//         left: `${position.x}px`,
-//         top: `${position.y}px`,
-//       }}
-//     >
-//       <p>{message}</p>
-//       <button onClick={onClose}>Got It!</button>
-//     </div>
-//   );
-// };
-
-// // Original images array
-// const allImages = [
-//   '/t_halli_dataset/guiiu.png',
-//   '/t_halli_dataset/a_L7A8980.png',
-//   '/t_halli_dataset/a_L7A8976.png',
-//   '/t_halli_dataset/a_L7A8970 copy.png',
-//   '/t_halli_dataset/a_L7A8968 copy.png',
-//   '/t_halli_dataset/a_L7A8966.png',
-//   '/t_halli_dataset/a_L7A8964.png',
-//   '/t_halli_dataset/a_L7A8956.png',
-//   '/t_halli_dataset/a_L7A8951.png',
-//   '/t_halli_dataset/a_L7A8948.png',
-//   '/t_halli_dataset/a_L7A8939.png',
-//   '/t_halli_dataset/a_L7A8936.png',
-//   '/t_halli_dataset/a_L7A8901.png',
-//   '/t_halli_dataset/a_L7A8877.png',
-//   '/t_halli_dataset/a_L7A8863.png',
-//   '/t_halli_dataset/a_L7A8828.png',
-//   '/t_halli_dataset/a_L7A8800.png',
-//   '/t_halli_dataset/a_L7A8777 copy.png',
-//   '/t_halli_dataset/a_L7A8773.png',
-//   '/t_halli_dataset/a_L7A8764.png',
-//   '/t_halli_dataset/a_L7A8763.png',
-//   '/park_dataset/IMG_4061.png',
-//   '/park_dataset/IMG_4059.png',
-//   '/park_dataset/IMG_4029.png',
-//   '/park_dataset/IMG_4025.png',
-//   '/park_dataset/IMG_4023.png',
-//   '/park_dataset/IMG_4020.png',
-//   '/park_dataset/IMG_4019.png',
-//   '/park_dataset/IMG_4012.png',
-//   '/park_dataset/IMG_4011.png',
-//   '/park_dataset/IMG_3989.png',
-//   '/park_dataset/IMG_3986.png',
-//   '/park_dataset/IMG_3985.png',
-//   '/park_dataset/IMG_3980.png',
-//   '/park_dataset/IMG_3979.png',
-//   '/mustafabad_dataset/IMG_0088-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0084-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0082-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0081-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0059-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0058-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0052-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0045-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0043-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0038-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0036-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0033-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0032-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0031-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0027-removebg-preview.png',
-//   '/mustafabad_dataset/IMG_0018-removebg-preview.png',
-//   'https://media.istockphoto.com/id/1403500817/photo/the-craggies-in-the-blue-ridge-mountains.jpg?s=612x612&w=0&k=20&c=N-pGA8OClRVDzRfj_9AqANnOaDS3devZWwrQNwZuDSk=',
-//   'https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630',
-//   'https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp'
-// ];
-
-// // Split images into batches
-// const imageBatches = {
-//   qr_1: allImages.slice(0, 21),
-//   qr_2: allImages.slice(21, 35),
-//   qr_3: allImages.slice(35, 51),
-//   qr_4: allImages.slice(51, 54)
-// };
-
-// const Canva = () => {
-//   const { qrCode = 'qr_1' } = useParams();
-//   const [availableImages, setAvailableImages] = useState(imageBatches[qrCode] || imageBatches.qr_1);
-//   const [droppedImages, setDroppedImages] = useState([]);
-//   const [positions, setPositions] = useState([]);
-//   const [sizes, setSizes] = useState([]);
-//   const [rotations, setRotations] = useState([]);
-//   const [locked, setLocked] = useState([]);
-//   const [history, setHistory] = useState([]);
-//   const [imageKeys, setImageKeys] = useState([]);
-//   const [scale, setScale] = useState(1);
-//   const [translate, setTranslate] = useState({ x: 0, y: 0 });
-//   const [dragging, setDragging] = useState(false);
-//   const [start, setStart] = useState({ x: 0, y: 0 });
-//   const [showSidebar, setShowSidebar] = useState(true);
-//   const [selectedIndex, setSelectedIndex] = useState(null);
-//   const [tutorialStep, setTutorialStep] = useState('initial');
-//   const [dialogue, setDialogue] = useState(null);
-
-//   const sidebarImagesRef = useRef([]);
-//   const controlsRef = useRef(null);
-//   const canvasRef = useRef(null);
-
-//   // Update available images when qrCode changes
-//   useEffect(() => {
-//     const batch = imageBatches[qrCode] || imageBatches.qr_1;
-//     setAvailableImages(batch);
-//   }, [qrCode]);
-
-//   // Show initial dialogue box
-//   useEffect(() => {
-//     if (tutorialStep === 'initial' && sidebarImagesRef.current.length > 0) {
-//       const randomIndex = Math.floor(Math.random() * sidebarImagesRef.current.length);
-//       const imgElement = sidebarImagesRef.current[randomIndex];
-//       if (imgElement) {
-//         const rect = imgElement.getBoundingClientRect();
-//         setDialogue({
-//           message: 'Drag this sticker and drop it onto the canvas to start creating!',
-//           position: {
-//             x: rect.left + rect.width / 2,
-//             y: rect.top - 10,
-//           },
-//           isOverlap: false,
-//         });
-//       }
-//     }
-//   }, [tutorialStep]);
-
-//   // Real-time Firebase listener
-//   useEffect(() => {
-//     const imagesRef = ref(database, 'droppedImages');
-//     const unsubscribe = onValue(imagesRef, (snapshot) => {
-//       const data = snapshot.val();
-//       if (data) {
-//         const newImages = [];
-//         const newPositions = [];
-//         const newSizes = [];
-//         const newRotations = [];
-//         const newLocked = [];
-//         const newKeys = [];
-
-//         Object.entries(data).forEach(([key, item]) => {
-//           newImages.push(item.image);
-//           newPositions.push(item.position);
-//           newSizes.push(item.size || 80);
-//           newRotations.push(item.rotation || 0);
-//           newLocked.push(item.locked || false);
-//           newKeys.push(key);
-//         });
-
-//         setDroppedImages(newImages);
-//         setPositions(newPositions);
-//         setSizes(newSizes);
-//         setRotations(newRotations);
-//         setLocked(newLocked);
-//         setImageKeys(newKeys);
-//       } else {
-//         setDroppedImages([]);
-//         setPositions([]);
-//         setSizes([]);
-//         setRotations([]);
-//         setLocked([]);
-//         setImageKeys([]);
-//       }
-//     });
-
-//     return () => unsubscribe();
-//   }, []);
-
-//   const startDrag = (event) => {
-//     setDragging(true);
-//     setStart({
-//       x: event.clientX - translate.x,
-//       y: event.clientY - translate.y
-//     });
-//   };
-
-//   const handleTouchStart = (e) => {
-//     if (e.touches.length === 1) {
-//       const touch = e.touches[0];
-//       const simulatedEvent = {
-//         clientX: touch.clientX,
-//         clientY: touch.clientY,
-//       };
-//       startDrag(simulatedEvent);
-//     }
-//   };
-
-//   const handleTouchMove = (e) => {
-//     if (e.touches.length === 1) {
-//       const touch = e.touches[0];
-//       const simulatedEvent = {
-//         clientX: touch.clientX,
-//         clientY: touch.clientY,
-//       };
-//       onDrag(simulatedEvent);
-//     }
-//   };
-
-//   const endDrag = () => {
-//     setDragging(false);
-//   };
-
-//   const onDrag = (event) => {
-//     if (!dragging) return;
-//     setTranslate({
-//       x: event.clientX - start.x,
-//       y: event.clientY - start.y
-//     });
-//   };
-
-//   const handleWheelZoom = (event) => {
-//     event.preventDefault();
-//     const zoomFactor = 0.1;
-//     const newScale = event.deltaY > 0 ? scale - zoomFactor : scale + zoomFactor;
-//     setScale(Math.max(0.5, Math.min(3, newScale)));
-//   };
-
-//   const onDragStart = (event, image) => {
-//     event.dataTransfer.setData('image', image);
-//   };
-
-//   const onDrop = (event) => {
-//     event.preventDefault();
-//     const image = event.dataTransfer.getData('image');
-//     const rect = canvasRef.current.getBoundingClientRect();
-
-//     const clientX = event.clientX || (event.touches && event.touches[0].clientX);
-//     const clientY = event.clientY || (event.touches && event.touches[0].clientY);
-//     const x = (clientX - rect.left - translate.x) / scale;
-//     const y = (clientY - rect.top - translate.y) / scale;
-//     const newSize = 80; // Default size for new stickers
-
-//     // Collision detection
-//     const newBox = {
-//       left: x - newSize / 2,
-//       right: x + newSize / 2,
-//       top: y - newSize / 2,
-//       bottom: y + newSize / 2,
-//     };
-
-//     const hasOverlap = positions.some((pos, idx) => {
-//       const size = sizes[idx];
-//       const existingBox = {
-//         left: pos.x - size / 2,
-//         right: pos.x + size / 2,
-//         top: pos.y - size / 2,
-//         bottom: pos.y + size / 2,
-//       };
-
-//       return !(
-//         newBox.right < existingBox.left ||
-//         newBox.left > existingBox.right ||
-//         newBox.bottom < existingBox.top ||
-//         newBox.top > existingBox.bottom
-//       );
-//     });
-
-//     if (hasOverlap) {
-//       // Show overlap dialogue
-//       setDialogue({
-//         message: 'Oops! This spot is taken. Try dropping the sticker somewhere else.',
-//         position: {
-//           x: clientX,
-//           y: clientY - 50, // Position above drop point
-//         },
-//         isOverlap: true,
-//       });
-//       return;
-//     }
-
-//     // Proceed with drop if no overlap
-//     const newDroppedImages = [...droppedImages, image];
-//     const newPositions = [...positions, { x, y }];
-//     const newSizes = [...sizes, newSize];
-//     const newRotations = [...rotations, 0];
-//     const newLocked = [...locked, false];
-
-//     setHistory([...history, {
-//       images: [...droppedImages],
-//       positions: [...positions],
-//       sizes: [...sizes],
-//       rotations: [...rotations],
-//       locked: [...locked]
-//     }]);
-
-//     setDroppedImages(newDroppedImages);
-//     setPositions(newPositions);
-//     setSizes(newSizes);
-//     setRotations(newRotations);
-//     setLocked(newLocked);
-
-//     const imagesRef = ref(database, 'droppedImages');
-//     const newImageRef = push(imagesRef);
-//     const newKey = newImageRef.key;
-//     setImageKeys([...imageKeys, newKey]);
-
-//     set(newImageRef, {
-//       image,
-//       position: { x, y },
-//       size: newSize,
-//       rotation: 0,
-//       locked: false
-//     });
-
-//     // Show controls dialogue after first drop
-//     if (tutorialStep === 'initial') {
-//       setTutorialStep('dropped');
-//       setShowSidebar(false);
-//       setTimeout(() => {
-//         if (controlsRef.current) {
-//           const rect = controlsRef.current.getBoundingClientRect();
-//           setDialogue({
-//             message: 'Click a sticker to select it, then use these buttons to resize, rotate, or lock it!',
-//             position: {
-//               x: rect.left + rect.width / 2,
-//               y: rect.top - 10,
-//             },
-//             isOverlap: false,
-//           });
-//         }
-//       }, 500);
-//     }
-
-//     setShowSidebar(false);
-//   };
-
-//   const undoLastAction = () => {
-//     if (history.length > 0) {
-//       const lastState = history[history.length - 1];
-//       setDroppedImages(lastState.images);
-//       setPositions(lastState.positions);
-//       setSizes(lastState.sizes);
-//       setRotations(lastState.rotations);
-//       setLocked(lastState.locked);
-//       setHistory(history.slice(0, -1));
-
-//       const imagesRef = ref(database, 'droppedImages');
-//       set(imagesRef, lastState.images.reduce((acc, img, idx) => {
-//         acc[imageKeys[idx]] = {
-//           image: img,
-//           position: lastState.positions[idx],
-//           size: lastState.sizes[idx],
-//           rotation: lastState.rotations[idx],
-//           locked: lastState.locked[idx]
-//         };
-//         return acc;
-//       }, {}));
-
-//       if (tutorialStep === 'controls') {
-//         setTutorialStep('undo');
-//         setTimeout(() => {
-//           if (controlsRef.current) {
-//             const rect = controlsRef.current.getBoundingClientRect();
-//             setDialogue({
-//               message: 'Mistake? Use the Undo button to go back!',
-//               position: {
-//                 x: rect.left + rect.width / 2,
-//                 y: rect.top - 10,
-//               },
-//               isOverlap: false,
-//             });
-//           }
-//         }, 500);
-//       }
-//     }
-//   };
-
-//   const toggleSidebar = () => {
-//     setShowSidebar((prev) => !prev);
-//     setSelectedIndex(null);
-//   };
-
-//   const handleSizeChange = (index, increment) => {
-//     if (locked[index]) return;
-
-//     const newSizes = [...sizes];
-//     newSizes[index] = Math.max(40, newSizes[index] + increment);
-//     setSizes(newSizes);
-
-//     const imageRef = ref(database, `droppedImages/${imageKeys[index]}`);
-//     update(imageRef, { size: newSizes[index] });
-//   };
-
-//   const handleRotate = (index, degrees) => {
-//     if (locked[index]) return;
-
-//     const newRotations = [...rotations];
-//     newRotations[index] += degrees;
-//     setRotations(newRotations);
-
-//     const imageRef = ref(database, `droppedImages/${imageKeys[index]}`);
-//     update(imageRef, { rotation: newRotations[index] });
-//   };
-
-//   const toggleLock = (index) => {
-//     const newLocked = [...locked];
-//     newLocked[index] = !newLocked[index];
-//     setLocked(newLocked);
-
-//     const imageRef = ref(database, `droppedImages/${imageKeys[index]}`);
-//     update(imageRef, { locked: newLocked[index] });
-//   };
-
-//   const handleSelectSticker = (index) => {
-//     setSelectedIndex(index);
-//     if (tutorialStep === 'dropped') {
-//       setTutorialStep('controls');
-//       setTimeout(() => {
-//         if (controlsRef.current) {
-//           const rect = controlsRef.current.getBoundingClientRect();
-//           setDialogue({
-//             message: 'Use these buttons to resize, rotate, or lock your sticker. Lock it to prevent changes!',
-//             position: {
-//               x: rect.left + rect.width / 2,
-//               y: rect.top - 10,
-//             },
-//             isOverlap: false,
-//           });
-//         }
-//       }, 500);
-//     }
-//   };
-
-//   const closeDialogue = () => {
-//     setDialogue(null);
-//   };
-
-//   return (
-//     <div
-//       className="canva-container"
-//       onMouseDown={startDrag}
-//       onMouseMove={onDrag}
-//       onMouseUp={endDrag}
-//       onWheel={handleWheelZoom}
-//       onTouchStart={handleTouchStart}
-//       onTouchMove={handleTouchMove}
-//       onTouchEnd={endDrag}
-//     >
-//       {showSidebar ? (
-//         <div className="sidebar">
-//           {availableImages.map((image, index) => (
-//             <img
-//               key={index}
-//               src={image}
-//               alt={`img-${index}`}
-//               draggable
-//               onDragStart={(event) => onDragStart(event, image)}
-//               ref={(el) => (sidebarImagesRef.current[index] = el)}
-//             />
-//           ))}
-//         </div>
-//       ) : (
-//         <div className="sidebar-controls" ref={controlsRef}>
-//           <button onClick={toggleSidebar}>Show Sidebar</button>
-//           <button onClick={undoLastAction}>Undo</button>
-//           {selectedIndex !== null && (
-//             <>
-//               <button onClick={() => handleSizeChange(selectedIndex, 10)}>Increase Size</button>
-//               <button onClick={() => handleSizeChange(selectedIndex, -10)}>Decrease Size</button>
-//               <button onClick={() => handleRotate(selectedIndex, 15)}>Rotate +15°</button>
-//               <button onClick={() => handleRotate(selectedIndex, -15)}>Rotate -15°</button>
-//               <button onClick={() => toggleLock(selectedIndex)}>
-//                 {locked[selectedIndex] ? 'Unlock' : 'Lock'}
-//               </button>
-//             </>
-//           )}
-//         </div>
-//       )}
-
-//       <div className="canva-wrapper">
-//         <div
-//           ref={canvasRef}
-//           className="canva-space"
-//           onDrop={onDrop}
-//           onDragOver={(e) => e.preventDefault()}
-//           style={{ transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})` }}
-//         >
-//           {droppedImages.map((image, index) => (
-//             <img
-//               key={imageKeys[index] || index}
-//               src={image}
-//               alt={`dropped-img-${index}`}
-//               onClick={() => handleSelectSticker(index)}
-//               style={{
-//                 position: 'absolute',
-//                 left: `${positions[index].x}px`,
-//                 top: `${positions[index].y}px`,
-//                 width: `${sizes[index]}px`,
-//                 transform: `rotate(${rotations[index]}deg)`,
-//                 cursor: locked[index] ? 'not-allowed' : 'pointer'
-//               }}
-//             />
-//           ))}
-//         </div>
-//       </div>
-//       <div className="qr-indicator">
-//         Access Level: {qrCode ? qrCode.toUpperCase() : 'QR_1'}
-//       </div>
-
-//       {dialogue && (
-//         <DialogueBox
-//           message={dialogue.message}
-//           position={dialogue.position}
-//           onClose={closeDialogue}
-//           isOverlap={dialogue.isOverlap}
-//         />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Canva;
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import { ref, set, push, onValue, update } from 'firebase/database';
 import { database } from '../firebaseConfig';
@@ -692,6 +169,7 @@ const Canva = () => {
   const [editTextMode, setEditTextMode] = useState(false);
   const [textContent, setTextContent] = useState('');
   const [textColor, setTextColor] = useState('#000000');
+  const [textSize, setTextSize] = useState(16);
   const [lastValidPosition, setLastValidPosition] = useState([]);
 
   const sidebarImagesRef = useRef([]);
@@ -1417,7 +895,7 @@ const Canva = () => {
     const newPositions = [...positions, { x, y }];
     const newSizes = [...sizes, newSize];
     const newRotations = [...rotations, 0];
-    const newTexts = [...texts, { content: '', position: { x: 0, y: 0 }, color: '#000000' }];
+    const newTexts = [...texts, { content: '', position: { x: 0, y: 0 }, color: '#000000', size: 16 }];
     const newLocked = [...locked, false];
     const newLastValidPosition = [...lastValidPosition, { x, y }];
 
@@ -1448,7 +926,7 @@ const Canva = () => {
       position: { x, y },
       size: newSize,
       rotation: 0,
-      text: { content: '', position: { x: 0, y: 0 }, color: '#000000' },
+      text: { content: '', position: { x: 0, y: 0 }, color: '#000000', size: 16 },
       locked: false
     });
 
@@ -1536,7 +1014,8 @@ const Canva = () => {
     newTexts[selectedIndex] = {
       content: textContent,
       position: newTexts[selectedIndex].position || { x: 0, y: 0 },
-      color: textColor
+      color: textColor,
+      size: textSize
     };
     setTexts(newTexts);
 
@@ -1622,7 +1101,13 @@ const Canva = () => {
                 type="text"
                 value={textContent}
                 onChange={(e) => setTextContent(e.target.value)}
+                placeholder="Enter text"
               />
+              <div className="text-size-controls">
+                <button onClick={() => setTextSize(prev => Math.max(8, prev - 2))}>-</button>
+                <span>{textSize}px</span>
+                <button onClick={() => setTextSize(prev => Math.min(72, prev + 2))}>+</button>
+              </div>
               <input
                 type="color"
                 value={textColor}
@@ -1668,13 +1153,12 @@ const Canva = () => {
                 <div
                   className="text-overlay"
                   style={{
-                    position: 'absolute',
                     left: `${texts[index].position.x}px`,
                     top: `${texts[index].position.y}px`,
                     color: texts[index].color,
+                    fontSize: `${texts[index].size}px`,
                     cursor: locked[index] ? 'not-allowed' : 'move'
                   }}
-                  onMouseDown={(e) => handleMouseDown(e, 'text')}
                 >
                   {texts[index].content}
                 </div>

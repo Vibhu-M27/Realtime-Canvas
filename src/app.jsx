@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams, Link } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Canvas } from './components/Canvas';
 import { getStickersForRegion } from './data/stickers';
